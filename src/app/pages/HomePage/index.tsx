@@ -36,7 +36,7 @@ const Todocheck = styled.input`
 export function HomePage() {
   const [todoList, setTodoList] = React.useState<ITodoItem[]>([
     { id: '1', content: '첫번째 투두', completed: true, editing: false },
-    { id: '2', content: '두번째 투두', completed: true, editing: false },
+    { id: '2', content: '두번째 투두', completed: true, editing: true },
     { id: '3', content: '세번째 투두', completed: false, editing: false },
   ]);
   return (
