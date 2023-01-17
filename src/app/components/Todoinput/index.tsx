@@ -9,7 +9,6 @@ const Box = styled.div<{ isEditing?: boolean }>`
   align-items: center;
   padding: ${props => (props.isEditing ? '5px 0px' : '15px 24px')};
   width: 100%;
-  font-size: 1.1em;
   border-bottom: 1px solid #eee;
 `;
 
@@ -22,7 +21,7 @@ const Input = styled.input`
 //빈태그를 넣는 이유 : 컴포넌트를 단순하게 코드상으로 연결하기 위해 사용
 
 export default function TodoInput({
-  setTodoList,
+  addTodo,
   isEditing,
   editContent,
   editTodo,
@@ -30,17 +29,18 @@ export default function TodoInput({
 }: //setTodoList를 통해 todolist에 todo를 추가할수 있다
 //type인 인자가 Todo가 들어가고 그 Todo는 ITdoItem타입을 가지도록 한다.
 {
-  setTodoList?: (todo: ITodoItem) => void;
+  addTodo?: (content: string) => void;
   isEditing?: boolean;
   editContent?: string;
   editTodo?: (content: string) => void;
   editModeTodo?: () => void;
 
+  //function을 정의할 때는 "(매개변수: 매개변수 타입) => void " 이런 형식으로 정의한다.
   //TodoInput 컴포넌트에서 setTodoList가 props으로 들어오지 않을수도 있어서
   //setTodoList뒤에 ?를 붙여 조건을 나타낸다.
 }) {
   //input component 값을 관리할 content 상태를 다음과 같이 정의
-  const [content, setContent] = React.useState<string>('');
+  const [content, setContent] = React.useState<string>(editContent || '');
   return (
     //Box 컴포넌트에 isEditing이라는 props추가
     <Box isEditing={isEditing}>
@@ -62,13 +62,7 @@ export default function TodoInput({
             editTodo && editTodo(content);
           } else {
             //&& ==> setTodoList가 존재할때만 함수를 실행한다는 의미
-            setTodoList &&
-              setTodoList({
-                id: '0',
-                content: content,
-                completed: false,
-                editing: false,
-              });
+            addTodo && addTodo(content);
           }
         }}
       />
